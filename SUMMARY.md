@@ -1,7 +1,7 @@
 # Table of contents
 
-* [kaggle book](README.md)
+* [💩 캐글 프로그래밍 학습](README.md)
 
-## Start kaggle
+## 😭 시작하기 전에 <a href="#before-start" id="before-start"></a>
 
-* [Test](start-kaggle/test.md)
+* [캐글이란](before-start/about-kaggle.md)
