@@ -4,6 +4,10 @@ description: 레오나르도 디카프리오~
 
 # 타이타닉 생존자 분석
 
+
+
+
+
 먼저 Titanic - Machine Learning from Disaster 를 클릭합니다. 화면에 영어로 된 내용을 읽기 귀찮다면 구글의 번역기능을 활용하세요.
 
 {% embed url="https://www.kaggle.com/competitions/titanic" %}
@@ -99,3 +103,62 @@ train.tail()
 <figure><img src="../.gitbook/assets/perso_20221005_005.png" alt=""><figcaption><p>train data</p></figcaption></figure>
 
 위와 같이 보면 총 890까지 데이터가 나와 있습니다. 인덱스는 0부터 시작하기 때문에 총 891개의 데이터가 존재하는 것을 알 수 있습니다. 여기에서의 특이점은 Age, Cabin에 NaN이 보이는 것입니다. 값이 없다는 뜻이죠.
+
+테스트 데이터도 로드합니다.
+
+```
+# 테스트 데이터 로드
+test = pd.read_csv('/kaggle/input/titanic/test.csv')
+test.tail()
+```
+
+훈련 데이터의 정보를 확인해보면,
+
+```
+train.info()
+# 총 891개의 데이터 중에서 Age와 Cabin, Embarked에서 결측치가 확인됨
+```
+
+아래와 같이 결과가 나옵니다.
+
+```
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 891 entries, 0 to 890
+Data columns (total 12 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   PassengerId  891 non-null    int64  
+ 1   Survived     891 non-null    int64  
+ 2   Pclass       891 non-null    int64  
+ 3   Name         891 non-null    object 
+ 4   Sex          891 non-null    object 
+ 5   Age          714 non-null    float64
+ 6   SibSp        891 non-null    int64  
+ 7   Parch        891 non-null    int64  
+ 8   Ticket       891 non-null    object 
+ 9   Fare         891 non-null    float64
+ 10  Cabin        204 non-null    object 
+ 11  Embarked     889 non-null    object 
+dtypes: float64(2), int64(5), object(5)
+memory usage: 83.7+ KB
+```
+
+이 얘기는, 총 데이터 891 중에 Age 컬럼은 177개, Cabin은 687개, Embarked는 2개의 결측치(NaN)가 존재합니다. 이를 주의해야 합니다. test도 동일하게 확인해보면, Age 86개, Fare 1개, Cabin 327개의 결측치가 존재합니다.
+
+### 이제 진짜 데이터분석
+
+마크다운을 추가합니다.
+
+```
+## 3 데이터 분석
+
+train에는 PassengerId ~ Embarked 까지 12개의 컬럼, test는 Survived를 제외하고 동일하게 존재합니다.
+데이터수는 train은 891개, test는 418개이나, 내용 중에 891개, 418개를 가지지 못한 데이터 컬럼이 존재합니다.
+```
+
+결측치는 어떻게 할까요? 또한, 아래와 같은 내용을 고민해 봐야 합니다.
+
+* 결측치가 포함된 데이터는 버린다
+* 기본값(중앙값, 평균값 등)을 채운다
+* 데이터의 형변환이 가능한가
+
